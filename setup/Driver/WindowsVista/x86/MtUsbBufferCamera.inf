@@ -1,0 +1,91 @@
+; Installation INF for the Mightex Generic USB Driver for Windows 98ME/2000/XP
+;
+
+[Version]
+Signature="$CHICAGO$"
+Class=USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+provider=%PROVIDER%
+CatalogFile=MtBufUsb.cat
+DriverVer=04/21/2009,3.4.0.110
+
+[SourceDisksNames]
+1=%MtBufUsb_INSTALL%,,,
+
+[SourceDisksFiles]
+MtBufUsbME.sys = 1
+MtBufUsb.sys = 1
+MtBufUsb.spd = 1
+
+[Manufacturer]
+%MFGNAME%=Mightex
+
+[Mightex]
+; Mightex FX2LP default ID
+;%VID_04B4&PID_8613.DeviceDesc%=MtBufUsb, USB\VID_04B4&PID_8613
+
+; Mightex FX1 default ID
+;%VID_04B4&PID_6473.DeviceDesc%=MtBufUsb, USB\VID_04B4&PID_6473
+
+; Mightex FX2LP Example Device.  DVK firmware examples use this VID/PID
+%VID_04B4&PID_0428.DeviceDesc%=MtBufUsb, USB\VID_04B4&PID_0428
+
+[DestinationDirs]
+MtBufUsbME.Files.Ext = 10,System32\Drivers
+MtBufUsb.Files.Ext = 10,System32\Drivers
+
+[MtBufUsb]
+CopyFiles=MtBufUsbME.Files.Ext
+AddReg=MtBufUsbME.AddReg
+
+[MtBufUsb.HW]
+AddReg=MtBufUsb.AddReg.Guid
+
+[MtBufUsb.NT]
+CopyFiles=MtBufUsb.Files.Ext
+AddReg=MtBufUsb.AddReg
+
+[MtBufUsb.NT.HW]
+AddReg=MtBufUsb.AddReg.Guid
+
+[MtBufUsb.NT.Services]
+Addservice = MtBufUsb, 0x00000002, MtBufUsb.AddService
+
+[MtBufUsb.AddService]
+DisplayName    = %MtBufUsb.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\MtBufUsb.sys
+LoadOrderGroup = Base
+
+[MtBufUsbME.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,MtBufUsbME.sys
+
+[MtBufUsb.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,MtBufUsb.sys
+
+[MtBufUsbME.Files.Ext]
+MtBufUsbME.sys
+
+[MtBufUsb.Files.Ext]
+MtBufUsb.sys
+
+[MtBufUsb.AddReg.Guid]
+;HKR,,DriverGUID,,%MtBufUsb.GUID%
+
+;---------------------------------------------------------------;
+
+[Strings]
+PROVIDER="Mightex"
+MFGNAME="Mightex"
+MtBufUsb_INSTALL="Mightex Generic USB Driver Installation Disk"
+;VID_04B4&PID_8613.DeviceDesc="Mightex EZ-USB FX2LP - EEPROM blanking"
+;VID_04B4&PID_6473.DeviceDesc="Mightex EZ-USB FX1 - EEPROM missing"
+VID_04B4&PID_0428.DeviceDesc="Mightex Buffer USB Device"
+MtBufUsb.SvcDesc="Mightex Buffer USB Driver"
+
+;MtBufUsb.GUID="{9D70D096-27D5-4cd9-B0E6-969A61B48E5C}"
+

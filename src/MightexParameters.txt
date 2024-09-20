@@ -1,0 +1,6 @@
+Exposure Time ms (1-750), 750 
+Gain (0-64), 5 
+Gamma (0-20), 6 
+Contrast(0-100), 85 
+Brightness(0-100), 73 
+Sharpness (0-3), 1 

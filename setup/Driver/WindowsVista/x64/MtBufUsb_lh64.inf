@@ -1,0 +1,125 @@
+; Installation INF for the Mightex Buffer USB Driver for Windows Vista
+; Processor support for OS unknown platforms.
+;
+; (c) Copyright 2009 Mightex system.
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+provider=%MtBufUsb_lh64_Provider%
+CatalogFile=MtBufUsb_lh64.cat
+DriverVer=04/09/2009,3.4.0.110
+
+[SourceDisksNames]
+1=%MtBufUsb_lh64_Install%,,,
+
+[SourceDisksFiles]
+MtBufUsb_lh64.sys = 1
+
+[DestinationDirs]
+MtBufUsb_lh64.Files.Ext = 10,System32\Drivers
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[Manufacturer]
+%MtBufUsb_lh64_Provider%=Device,NT,NTx86,NTamd64
+
+;for all platforms
+[Device]
+%VID_04B4&PID_0428.DeviceDesc%=MtBufUsb_lh64, USB\VID_04B4&PID_0428
+
+
+;for windows 2000 non intel platforms
+[Device.NT]
+%VID_04B4&PID_0428.DeviceDesc%=MtBufUsb_lh64, USB\VID_04B4&PID_0428
+
+
+;for x86 platforms
+[Device.NTx86]
+%VID_04B4&PID_0428.DeviceDesc%=MtBufUsb_lh64, USB\VID_04B4&PID_0428
+
+
+;for x64 platforms
+[Device.NTamd64]
+%VID_04B4&PID_0428.DeviceDesc%=MtBufUsb_lh64, USB\VID_04B4&PID_0428
+
+
+[MtBufUsb_lh64]
+CopyFiles=MtBufUsb_lh64.Files.Ext
+AddReg=MtBufUsb_lh64.AddReg
+
+[MtBufUsb_lh64.HW]
+AddReg=MtBufUsb_lh64.AddReg.Guid
+
+[MtBufUsb_lh64.Services]
+Addservice = MtBufUsb_lh64,2,MtBufUsb_lh64.AddService
+
+[MtBufUsb_lh64.NT]
+CopyFiles=MtBufUsb_lh64.Files.Ext
+AddReg=MtBufUsb_lh64.AddReg
+
+[MtBufUsb_lh64.NT.HW]
+AddReg=MtBufUsb_lh64.AddReg.Guid
+
+[MtBufUsb_lh64.NT.Services]
+Addservice = MtBufUsb_lh64,2,MtBufUsb_lh64.AddService
+
+
+[MtBufUsb_lh64.NTx86]
+CopyFiles=MtBufUsb_lh64.Files.Ext
+AddReg=MtBufUsb_lh64.AddReg
+
+[MtBufUsb_lh64.NTx86.HW]
+AddReg=MtBufUsb_lh64.AddReg.Guid
+
+[MtBufUsb_lh64.NTx86.Services]
+Addservice = MtBufUsb_lh64,2,MtBufUsb_lh64.AddService
+
+[MtBufUsb_lh64.NTamd64]
+CopyFiles=MtBufUsb_lh64.Files.Ext
+AddReg=MtBufUsb_lh64.AddReg
+
+[MtBufUsb_lh64.NTamd64.HW]
+AddReg=MtBufUsb_lh64.AddReg.Guid
+
+[MtBufUsb_lh64.NTamd64.Services]
+Addservice = MtBufUsb_lh64,2,MtBufUsb_lh64.AddService
+
+
+[MtBufUsb_lh64.AddReg]
+; Deprecating - do not use in new apps to identify a MtBufUsb_lh64 driver
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,MtBufUsb_lh64.sys
+; You may optionally include a check for DriverBase in your application to check for a MtBufUsb_lh64 driver
+HKR,,DriverBase,,MtBufUsb_lh64.sys
+HKR,"Parameters","MaximumTransferSize",0x10001,4096
+HKR,"Parameters","DebugLevel",0x10001,2
+HKR,,FriendlyName,,%MtBufUsb_lh64_Description%
+
+[MtBufUsb_lh64.AddService]
+DisplayName    = %MtBufUsb_lh64_Description%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\MtBufUsb_lh64.sys
+AddReg         = MtBufUsb_lh64.AddReg
+LoadOrderGroup = Base
+
+[MtBufUsb_lh64.Files.Ext]
+MtBufUsb_lh64.sys
+
+[MtBufUsb_lh64.AddReg.Guid]
+HKR,,DriverGUID,,%MtBufUsb_lh64.GUID%
+
+[Strings]
+MtBufUsb_lh64_Provider    = "Mightex"
+MtBufUsb_lh64_Company     = "Mightex Systems"
+MtBufUsb_lh64_Description = "Mightex Buffer USB(64) Driver"
+MtBufUsb_lh64_DisplayName = "Mightex Buffer USB(64) Generic"
+MtBufUsb_lh64_Install     = "Mightex MtBufUsb_lh64 Driver Installation Disk"
+VID_04B4&PID_0428.DeviceDesc="Mightex Buffer USB Driver(64,3.4.0.110)"
+MtBufUsb_lh64.GUID="{AE18AA60-7F6A-11d4-97DD-00010229B959}"
+MtBufUsb_lh64_Unused      = "."
